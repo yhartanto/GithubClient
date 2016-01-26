@@ -53,7 +53,6 @@ public class GithubApiModule {
     @Provides
     @Singleton
     public UserManager provideUserManager(GithubApiService githubApiService) {
-        System.out.println("==BBB");
         return new UserManager(githubApiService);
     }
 }

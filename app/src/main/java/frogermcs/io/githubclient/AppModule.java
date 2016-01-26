@@ -1,6 +1,7 @@
 package frogermcs.io.githubclient;
 
 import android.app.Application;
+import android.util.Log;
 
 import javax.inject.Singleton;
 
@@ -24,12 +25,6 @@ public class AppModule {
     @Singleton
     public Application provideApplication() {
         return application;
-    }
-
-    @Provides
-    @Singleton
-    AnalyticsManager provideAnalyticsManager() {
-        return new AnalyticsManager(application);
     }
 
     @Provides

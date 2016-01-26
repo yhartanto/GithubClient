@@ -19,8 +19,8 @@ public class MockAppModule extends AppModule {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Override
-    AnalyticsManager provideAnalyticsManager() {
-        return analyticsManagerMock;
-    }
+//    @Override
+//    AnalyticsManager provideAnalyticsManager() {
+//        return analyticsManagerMock;
+//    }
 }
