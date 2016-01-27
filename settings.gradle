@@ -1,1 +1,1 @@
-include ':app', ':dagger2metrics'
+include ':app', ':dagger2metrics-runtime', ':dagger2metrics-plugin'
