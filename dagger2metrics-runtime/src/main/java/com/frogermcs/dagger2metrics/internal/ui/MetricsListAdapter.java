@@ -1,4 +1,4 @@
-package frogermcs.io.dagger2metrics.internal.ui;
+package com.frogermcs.dagger2metrics.internal.ui;
 
 import android.content.Context;
 import android.text.Html;
@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import frogermcs.io.dagger2metrics.R;
-import frogermcs.io.dagger2metrics.internal.MetricDescription;
+import com.frogermcs.dagger2metrics.R;
+import com.frogermcs.dagger2metrics.internal.MetricDescription;
 
 /**
  * Created by Miroslaw Stanek on 26.01.2016.

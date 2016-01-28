@@ -1,17 +1,6 @@
-buildscript {
-    repositories {
-        mavenCentral()
-
-        // NOTE: This is only needed when developing the plugin!
-        mavenLocal()
-    }
-    dependencies {
-        classpath 'org.aspectj:aspectjtools:1.8.8'
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.frogermcs.dagger2metrics'
 
 android {
     compileSdkVersion 23
@@ -35,12 +24,9 @@ android {
     }
 }
 
-dependencies {
-    repositories {
-        mavenCentral()
-
-        // NOTE: This is only needed when developing the plugin!
-        mavenLocal()
+repositories {
+    maven {
+        url 'https://dl.bintray.com/frogermcs/maven/'
     }
 }
 
@@ -48,8 +34,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
 
-    compile project(':dagger2metrics-runtime')
     compile 'org.aspectj:aspectjrt:1.8.8'
+    compile 'com.frogermcs.dagger2metrics:dagger2metrics-runtime:0.1.1-beta2'
+//    compile project(':dagger2metrics-runtime')
 
     //Dagger 2
     compile 'com.google.dagger:dagger:2.0.2'

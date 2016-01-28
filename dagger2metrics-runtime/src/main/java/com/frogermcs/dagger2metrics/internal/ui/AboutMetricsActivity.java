@@ -1,13 +1,9 @@
-package frogermcs.io.dagger2metrics.internal.ui;
+package com.frogermcs.dagger2metrics.internal.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import frogermcs.io.dagger2metrics.R;
+import com.frogermcs.dagger2metrics.R;
 
 /**
  * Created by Miroslaw Stanek on 25.01.2016.

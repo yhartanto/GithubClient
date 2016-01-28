@@ -3,7 +3,7 @@ package frogermcs.io.githubclient;
 import android.app.Application;
 import android.content.Context;
 
-import frogermcs.io.dagger2metrics.Dagger2Metrics;
+import com.frogermcs.dagger2metrics.Dagger2Metrics;
 import frogermcs.io.githubclient.data.UserComponent;
 import frogermcs.io.githubclient.data.api.UserModule;
 import frogermcs.io.githubclient.data.model.User;

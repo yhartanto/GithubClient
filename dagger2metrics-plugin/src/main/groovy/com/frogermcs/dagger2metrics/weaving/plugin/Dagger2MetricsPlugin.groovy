@@ -1,4 +1,4 @@
-package frogermcs.io.dagger2metrics.weaving.plugin
+package com.frogermcs.dagger2metrics.weaving.plugin
 
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryPlugin

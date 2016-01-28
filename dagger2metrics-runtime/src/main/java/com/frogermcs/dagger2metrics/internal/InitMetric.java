@@ -1,4 +1,4 @@
-package frogermcs.io.dagger2metrics.internal;
+package com.frogermcs.dagger2metrics.internal;
 
 import java.lang.reflect.Proxy;
 import java.util.Arrays;

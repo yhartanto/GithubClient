@@ -1,4 +1,4 @@
-package frogermcs.io.dagger2metrics;
+package com.frogermcs.dagger2metrics;
 
 import android.app.Application;
 import android.app.NotificationManager;
@@ -7,9 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import frogermcs.io.dagger2metrics.aspect.GraphAnalyzer;
-import frogermcs.io.dagger2metrics.internal.InitManager;
-import frogermcs.io.dagger2metrics.internal.ui.MetricsActivity;
+import com.frogermcs.dagger2metrics.aspect.GraphAnalyzer;
+import com.frogermcs.dagger2metrics.internal.InitManager;
+import com.frogermcs.dagger2metrics.internal.ui.MetricsActivity;
+
 
 /**
  * Created by Miroslaw Stanek on 25.01.2016.

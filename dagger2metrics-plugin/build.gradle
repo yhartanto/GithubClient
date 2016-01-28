@@ -1,43 +1,109 @@
 apply plugin: 'groovy'
 apply plugin: 'com.bmuschko.nexus'
-
+apply plugin: 'com.jfrog.bintray'
 
 targetCompatibility = JavaVersion.VERSION_1_7
 sourceCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-  compile gradleApi()
-  compile localGroovy()
-  compile 'com.android.tools.build:gradle:1.3.1'
-  compile 'org.aspectj:aspectjtools:1.8.8'
-  compile 'org.aspectj:aspectjrt:1.8.8'
+    compile gradleApi()
+    compile localGroovy()
+    compile 'com.android.tools.build:gradle:1.3.1'
+    compile 'org.aspectj:aspectjtools:1.8.8'
+    compile 'org.aspectj:aspectjrt:1.8.8'
 }
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'dagger2metrics-plugin'
+
+    publishedGroupId = 'com.frogermcs.dagger2metrics'
+    libraryName = 'Dagger2Metrics plugin'
+    artifact = 'dagger2metrics-plugin'
+
+    libraryDescription = 'Dagger2 graph initialization performance metrics'
+
+    siteUrl = 'https://github.com/frogermcs/dagger2metrics'
+    gitUrl = 'https://github.com/frogermcs/dagger2metrics.git'
+
+    libraryVersion = '0.1.1-beta2'
+
+    developerId = 'frogermcs'
+    developerName = 'Miroslaw Stanek'
+    developerEmail = 'froger.mcs@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+group = publishedGroupId
+version = libraryVersion
+
 modifyPom {
-  project {
-    name "Dagger2Metrics Plugin"
-    description POM_DESCRIPTION
-    url POM_URL
+    project {
+        name libraryName
+        description libraryDescription
+        url siteUrl
+        groupId publishedGroupId
+        artifactId artifact
 
-    scm {
-      url POM_SCM_URL
-      connection POM_SCM_CONNECTION
-      developerConnection POM_SCM_DEV_CONNECTION
-    }
+        scm {
+            url gitUrl
+        }
 
-    licenses {
-      license {
-        name POM_LICENCE_NAME
-        url POM_LICENCE_URL
-        distribution POM_LICENCE_DIST
-      }
-    }
+        licenses {
+            license {
+                name licenseName
+                url licenseUrl
+            }
+        }
 
-    developers {
-      developer {
-        id POM_DEVELOPER_ID
-        name POM_DEVELOPER_NAME
-      }
+        developers {
+            developer {
+                id developerId
+                name developerName
+                email developerEmail
+            }
+        }
     }
-  }
+}
+
+extraArchive {
+    sources = false
+    tests = true
+    javadoc = false
+}
+
+
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password")
+                //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
 }

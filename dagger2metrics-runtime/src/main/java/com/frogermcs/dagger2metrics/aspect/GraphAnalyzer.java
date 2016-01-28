@@ -3,7 +3,9 @@
  *
  * @author Fernando Cejas (the android10 coder)
  */
-package frogermcs.io.dagger2metrics.aspect;
+package com.frogermcs.dagger2metrics.aspect;
+
+import com.frogermcs.dagger2metrics.internal.InitManager;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,8 +16,6 @@ import org.aspectj.lang.reflect.ConstructorSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.util.concurrent.TimeUnit;
-
-import frogermcs.io.dagger2metrics.internal.InitManager;
 
 @Aspect
 public class GraphAnalyzer {

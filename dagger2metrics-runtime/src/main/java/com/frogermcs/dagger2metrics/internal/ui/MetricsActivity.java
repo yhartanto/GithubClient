@@ -1,4 +1,4 @@
-package frogermcs.io.dagger2metrics.internal.ui;
+package com.frogermcs.dagger2metrics.internal.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import frogermcs.io.dagger2metrics.R;
-import frogermcs.io.dagger2metrics.internal.InitManager;
-import frogermcs.io.dagger2metrics.internal.InitMetric;
-import frogermcs.io.dagger2metrics.internal.MetricDescription;
+import com.frogermcs.dagger2metrics.R;
+import com.frogermcs.dagger2metrics.internal.InitManager;
+import com.frogermcs.dagger2metrics.internal.InitMetric;
+import com.frogermcs.dagger2metrics.internal.MetricDescription;
 
 /**
  * Created by Miroslaw Stanek on 25.01.2016.
