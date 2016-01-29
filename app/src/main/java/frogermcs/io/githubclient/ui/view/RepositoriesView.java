@@ -17,11 +17,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import frogermcs.io.githubclient.GithubClientApplication;
 import frogermcs.io.githubclient.R;
 import frogermcs.io.githubclient.data.model.Repository;
 import frogermcs.io.githubclient.ui.activity.RepositoriesListUI;
-import frogermcs.io.githubclient.ui.activity.component.ActivityComponentProvider;
-import frogermcs.io.githubclient.ui.activity.component.RepositoriesListActivityComponent;
+import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityPresenter;
 import frogermcs.io.githubclient.ui.adapter.RepositoriesListAdapter;
 
@@ -55,8 +55,9 @@ public class RepositoriesView extends LinearLayout implements RepositoriesListUI
     protected void onFinishInflate() {
         super.onFinishInflate();
         inflate(getContext(), R.layout.repositories, this);
-        ((ActivityComponentProvider<RepositoriesListActivityComponent>) getContext())
-                .getActivityComponent()
+        GithubClientApplication.get(getContext())
+                .getUserComponent()
+                .plus(new RepositoriesListActivityModule())
                 .inject(this);
 
         ButterKnife.bind(this);

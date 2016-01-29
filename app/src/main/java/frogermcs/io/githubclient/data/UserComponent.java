@@ -2,7 +2,8 @@ package frogermcs.io.githubclient.data;
 
 import dagger.Subcomponent;
 import frogermcs.io.githubclient.data.api.UserModule;
-import frogermcs.io.githubclient.ui.activity.component.CombinedComponent;
+import frogermcs.io.githubclient.ui.activity.CombinedActivity;
+import frogermcs.io.githubclient.ui.activity.RepositoryDetailsActivity;
 import frogermcs.io.githubclient.ui.activity.component.RepositoriesListActivityComponent;
 import frogermcs.io.githubclient.ui.activity.component.RepositoryDetailsActivityComponent;
 import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
@@ -23,6 +24,7 @@ public interface UserComponent {
 
     RepositoryDetailsActivityComponent plus(RepositoryDetailsActivityModule module);
 
-    CombinedComponent plus(RepositoriesListActivityModule listModule,
-                           RepositoryDetailsActivityModule detailsModule);
+    CombinedActivity inject(CombinedActivity combinedActivity);
+
+    RepositoryDetailsActivity inject(RepositoryDetailsActivity repositoryDetailsActivity);
 }
