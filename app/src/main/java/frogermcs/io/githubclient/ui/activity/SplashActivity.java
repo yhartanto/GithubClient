@@ -82,7 +82,17 @@ public class SplashActivity extends BaseActivity {
         presenter.onShowRepositoriesClick();
     }
 
+    @OnClick(R.id.btnShowRepositoriesAndUser)
+    public void onShowRepositoriesAndUserClick() {
+        presenter.onShowRepositoriesAndUserClick();
+    }
+
     public void showRepositoriesListForUser(User user) {
+        GithubClientApplication.get(this).createUserComponent(user);
+        startActivity(new Intent(this, RepositoriesListActivity.class));
+    }
+
+    public void showRepositoriesListAndUser(User user) {
         GithubClientApplication.get(this).createUserComponent(user);
         startActivity(new Intent(this, CombinedActivity.class));
     }
