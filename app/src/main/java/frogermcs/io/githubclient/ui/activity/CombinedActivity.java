@@ -18,7 +18,8 @@ import butterknife.OnItemClick;
 import frogermcs.io.githubclient.GithubClientApplication;
 import frogermcs.io.githubclient.R;
 import frogermcs.io.githubclient.data.model.Repository;
-import frogermcs.io.githubclient.ui.activity.module.CombinedModule;
+import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
+import frogermcs.io.githubclient.ui.activity.module.RepositoryDetailsActivityModule;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityPresenter;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoryDetailsActivityPresenter;
 import frogermcs.io.githubclient.ui.adapter.RepositoriesListAdapter;
@@ -59,7 +60,7 @@ public class CombinedActivity extends BaseActivity implements RepositoriesListUI
     @Override
     protected void setupActivityComponent() {
         GithubClientApplication.get(this).getUserComponent()
-                .plus(new CombinedModule(this, this))
+                .plus(new RepositoriesListActivityModule(this), new RepositoryDetailsActivityModule(this))
                 .inject(this);
     }
 

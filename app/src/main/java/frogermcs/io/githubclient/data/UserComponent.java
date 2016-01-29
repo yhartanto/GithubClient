@@ -5,7 +5,6 @@ import frogermcs.io.githubclient.data.api.UserModule;
 import frogermcs.io.githubclient.ui.activity.component.CombinedComponent;
 import frogermcs.io.githubclient.ui.activity.component.RepositoriesListActivityComponent;
 import frogermcs.io.githubclient.ui.activity.component.RepositoryDetailsActivityComponent;
-import frogermcs.io.githubclient.ui.activity.module.CombinedModule;
 import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
 import frogermcs.io.githubclient.ui.activity.module.RepositoryDetailsActivityModule;
 
@@ -24,5 +23,6 @@ public interface UserComponent {
 
     RepositoryDetailsActivityComponent plus(RepositoryDetailsActivityModule module);
 
-    CombinedComponent plus(CombinedModule module);
+    CombinedComponent plus(RepositoriesListActivityModule listModule,
+                           RepositoryDetailsActivityModule detailsModule);
 }
