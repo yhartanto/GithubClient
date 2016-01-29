@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import frogermcs.io.githubclient.data.model.User;
 import frogermcs.io.githubclient.ui.activity.ActivityScope;
-import frogermcs.io.githubclient.ui.activity.RepositoryDetailsActivity;
+import frogermcs.io.githubclient.ui.activity.DetailUi;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoryDetailsActivityPresenter;
 
 /**
@@ -12,21 +12,21 @@ import frogermcs.io.githubclient.ui.activity.presenter.RepositoryDetailsActivity
  */
 @Module
 public class RepositoryDetailsActivityModule {
-    private RepositoryDetailsActivity repositoryDetailsActivity;
+    private DetailUi detailUi;
 
-    public RepositoryDetailsActivityModule(RepositoryDetailsActivity repositoryDetailsActivity) {
-        this.repositoryDetailsActivity = repositoryDetailsActivity;
+    public RepositoryDetailsActivityModule(DetailUi detailUi) {
+        this.detailUi = detailUi;
     }
 
     @Provides
     @ActivityScope
-    RepositoryDetailsActivity provideRepositoryDetailsActivity() {
-        return repositoryDetailsActivity;
+    DetailUi provideRepositoryDetailsActivity() {
+        return detailUi;
     }
 
     @Provides
     @ActivityScope
     RepositoryDetailsActivityPresenter provideRepositoryDetailsActivityPresenter(User user) {
-        return new RepositoryDetailsActivityPresenter(repositoryDetailsActivity, user);
+        return new RepositoryDetailsActivityPresenter(detailUi, user);
     }
 }
