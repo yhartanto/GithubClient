@@ -1,14 +1,9 @@
 package frogermcs.io.githubclient.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableList;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -17,20 +12,25 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import frogermcs.io.githubclient.GithubClientApplication;
 import frogermcs.io.githubclient.R;
+import frogermcs.io.githubclient.data.UserComponent;
 import frogermcs.io.githubclient.data.model.Repository;
+import frogermcs.io.githubclient.ui.activity.component.ActivityComponentProvider;
+import frogermcs.io.githubclient.ui.activity.component.RepositoriesListActivityComponent;
 import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
 import frogermcs.io.githubclient.ui.activity.module.RepositoryDetailsActivityModule;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityPresenter;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoryDetailsActivityPresenter;
 import frogermcs.io.githubclient.ui.adapter.RepositoriesListAdapter;
+import frogermcs.io.githubclient.ui.view.RepositoriesView;
 import frogermcs.io.githubclient.utils.AnalyticsManager;
 
 
-public class CombinedActivity extends BaseActivity implements RepositoriesListUI, DetailUi {
-    @Bind(R.id.lvRepositories)
-    ListView lvRepositories;
-    @Bind(R.id.pbLoading)
-    ProgressBar pbLoading;
+public class CombinedActivity extends BaseActivity implements RepositoriesListUI, DetailUi,
+        ActivityComponentProvider<RepositoriesListActivityComponent> {
+
+    @Bind(R.id.repositories)
+    RepositoriesView repositoriesView;
+
     @Bind(R.id.tvUserName)
     TextView tvUserName;
 
@@ -43,42 +43,40 @@ public class CombinedActivity extends BaseActivity implements RepositoriesListUI
     @Inject
     AnalyticsManager analyticsManager;
 
-    private RepositoriesListAdapter repositoriesListAdapter;
+    private RepositoriesListActivityComponent listActivityComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combined);
         ButterKnife.bind(this);
-        listPresenter.loadRepositories();
+        listPresenter.loadRepositories(this);
         detailPresenter.init();
-
-        repositoriesListAdapter = new RepositoriesListAdapter(this, new ArrayList<Repository>());
-        lvRepositories.setAdapter(repositoriesListAdapter);
     }
 
     @Override
     protected void setupActivityComponent() {
-        GithubClientApplication.get(this).getUserComponent()
-                .plus(new RepositoriesListActivityModule(this), new RepositoryDetailsActivityModule(this))
+        final RepositoriesListActivityModule module = new RepositoriesListActivityModule();
+        final UserComponent userComponent = GithubClientApplication.get(this).getUserComponent();
+        listActivityComponent = userComponent.plus(module);
+
+        userComponent.plus(module, new RepositoryDetailsActivityModule(this))
                 .inject(this);
     }
 
     @Override
     public void showLoading(boolean loading) {
-        lvRepositories.setVisibility(loading ? View.GONE : View.VISIBLE);
-        pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+        repositoriesView.showLoading(loading);
     }
 
     @Override
     public void setRepositories(ImmutableList<Repository> repositories) {
-        repositoriesListAdapter.clear();
-        repositoriesListAdapter.addAll(repositories);
+        repositoriesView.setRepositories(repositories);
     }
 
-    @OnItemClick(R.id.lvRepositories)
+    @OnItemClick(R.id.list)
     public void onRepositoryClick(int position) {
-        Repository repository = repositoriesListAdapter.getItem(position);
+        Repository repository = repositoriesView.getItem(position);
         RepositoryDetailsActivity.startWithRepository(repository, this);
     }
 
@@ -91,5 +89,10 @@ public class CombinedActivity extends BaseActivity implements RepositoriesListUI
     @Override
     public void setupUserName(final String userName) {
         tvUserName.setText(getString(R.string.repositories_of, userName));
+    }
+
+    @Override
+    public RepositoriesListActivityComponent getActivityComponent() {
+        return listActivityComponent;
     }
 }

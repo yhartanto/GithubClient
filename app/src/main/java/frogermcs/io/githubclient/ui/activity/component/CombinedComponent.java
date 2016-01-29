@@ -9,8 +9,7 @@ import frogermcs.io.githubclient.ui.activity.module.CombinedModule;
 @Subcomponent(
         modules = CombinedModule.class
 )
-public interface CombinedComponent {
+public interface CombinedComponent extends RepositoriesListActivityComponent {
 
     CombinedActivity inject(CombinedActivity combinedActivity);
-
 }
