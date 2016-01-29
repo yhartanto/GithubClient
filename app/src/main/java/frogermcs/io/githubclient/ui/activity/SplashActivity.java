@@ -2,7 +2,6 @@ package frogermcs.io.githubclient.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,9 +82,19 @@ public class SplashActivity extends BaseActivity {
         presenter.onShowRepositoriesClick();
     }
 
+    @OnClick(R.id.btnShowRepositoriesAndUser)
+    public void onShowRepositoriesAndUserClick() {
+        presenter.onShowRepositoriesAndUserClick();
+    }
+
     public void showRepositoriesListForUser(User user) {
         GithubClientApplication.get(this).createUserComponent(user);
         startActivity(new Intent(this, RepositoriesListActivity.class));
+    }
+
+    public void showRepositoriesListAndUser(User user) {
+        GithubClientApplication.get(this).createUserComponent(user);
+        startActivity(new Intent(this, CombinedActivity.class));
     }
 
     public void showValidationError() {

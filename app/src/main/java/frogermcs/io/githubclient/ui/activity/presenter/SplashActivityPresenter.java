@@ -52,4 +52,25 @@ public class SplashActivityPresenter {
             splashActivity.showValidationError();
         }
     }
+
+    public void onShowRepositoriesAndUserClick() {
+        if (validator.validUsername(username)) {
+            splashActivity.showLoading(true);
+            userManager.getUser(username).subscribe(new SimpleObserver<User>() {
+                @Override
+                public void onNext(User user) {
+                    splashActivity.showLoading(false);
+                    splashActivity.showRepositoriesListAndUser(user);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    splashActivity.showLoading(false);
+                    splashActivity.showValidationError();
+                }
+            });
+        } else {
+            splashActivity.showValidationError();
+        }
+    }
 }
