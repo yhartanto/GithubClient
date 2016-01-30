@@ -4,7 +4,6 @@ import dagger.Module;
 import dagger.Provides;
 import frogermcs.io.githubclient.data.api.RepositoriesManager;
 import frogermcs.io.githubclient.ui.activity.ActivityScope;
-import frogermcs.io.githubclient.ui.activity.RepositoriesListUI;
 import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityPresenter;
 
 /**
@@ -12,21 +11,10 @@ import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityP
  */
 @Module
 public class RepositoriesListActivityModule {
-    private RepositoriesListUI repositoriesListUI;
-
-    public RepositoriesListActivityModule(RepositoriesListUI repositoriesListUI) {
-        this.repositoriesListUI = repositoriesListUI;
-    }
-
-    @Provides
-    @ActivityScope
-    RepositoriesListUI provideRepositoriesListActivity() {
-        return repositoriesListUI;
-    }
 
     @Provides
     @ActivityScope
     RepositoriesListActivityPresenter provideRepositoriesListActivityPresenter(RepositoriesManager repositoriesManager) {
-        return new RepositoriesListActivityPresenter(repositoriesListUI, repositoriesManager);
+        return new RepositoriesListActivityPresenter(repositoriesManager);
     }
 }

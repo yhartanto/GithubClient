@@ -1,13 +1,6 @@
 package frogermcs.io.githubclient.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
-import com.google.common.collect.ImmutableList;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -17,58 +10,41 @@ import butterknife.OnItemClick;
 import frogermcs.io.githubclient.GithubClientApplication;
 import frogermcs.io.githubclient.R;
 import frogermcs.io.githubclient.data.model.Repository;
+import frogermcs.io.githubclient.ui.activity.component.ActivityComponentProvider;
+import frogermcs.io.githubclient.ui.activity.component.RepositoriesListActivityComponent;
 import frogermcs.io.githubclient.ui.activity.module.RepositoriesListActivityModule;
-import frogermcs.io.githubclient.ui.activity.presenter.RepositoriesListActivityPresenter;
-import frogermcs.io.githubclient.ui.adapter.RepositoriesListAdapter;
+import frogermcs.io.githubclient.ui.view.RepositoriesView;
 import frogermcs.io.githubclient.utils.AnalyticsManager;
 
+public class RepositoriesListActivity extends BaseActivity
+        implements ActivityComponentProvider<RepositoriesListActivityComponent> {
 
-public class RepositoriesListActivity extends BaseActivity implements RepositoriesListUI {
-    @Bind(R.id.lvRepositories)
-    ListView lvRepositories;
-    @Bind(R.id.pbLoading)
-    ProgressBar pbLoading;
+    @Bind(R.id.repositories)
+    RepositoriesView repositoriesView;
 
-    @Inject
-    RepositoriesListActivityPresenter presenter;
     @Inject
     AnalyticsManager analyticsManager;
 
-    private RepositoriesListAdapter repositoriesListAdapter;
+    private RepositoriesListActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repositories_list);
         ButterKnife.bind(this);
-        presenter.loadRepositories();
-
-        repositoriesListAdapter = new RepositoriesListAdapter(this, new ArrayList<Repository>());
-        lvRepositories.setAdapter(repositoriesListAdapter);
     }
 
     @Override
     protected void setupActivityComponent() {
-        GithubClientApplication.get(this).getUserComponent()
-                .plus(new RepositoriesListActivityModule(this))
-                .inject(this);
+        component = GithubClientApplication.get(this).getUserComponent()
+                .plus(new RepositoriesListActivityModule());
+
+        component.inject(this);
     }
 
-    @Override
-    public void showLoading(boolean loading) {
-        lvRepositories.setVisibility(loading ? View.GONE : View.VISIBLE);
-        pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void setRepositories(ImmutableList<Repository> repositories) {
-        repositoriesListAdapter.clear();
-        repositoriesListAdapter.addAll(repositories);
-    }
-
-    @OnItemClick(R.id.lvRepositories)
+    @OnItemClick(R.id.list)
     public void onRepositoryClick(int position) {
-        Repository repository = repositoriesListAdapter.getItem(position);
+        Repository repository = repositoriesView.getItem(position);
         RepositoryDetailsActivity.startWithRepository(repository, this);
     }
 
@@ -76,5 +52,10 @@ public class RepositoriesListActivity extends BaseActivity implements Repositori
     public void finish() {
         super.finish();
         GithubClientApplication.get(this).releaseUserComponent();
+    }
+
+    @Override
+    public RepositoriesListActivityComponent getActivityComponent() {
+        return component;
     }
 }

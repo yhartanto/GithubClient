@@ -2,8 +2,8 @@ package frogermcs.io.githubclient.ui.activity.component;
 
 import dagger.Subcomponent;
 import frogermcs.io.githubclient.ui.activity.ActivityScope;
-import frogermcs.io.githubclient.ui.activity.RepositoryDetailsActivity;
 import frogermcs.io.githubclient.ui.activity.module.RepositoryDetailsActivityModule;
+import frogermcs.io.githubclient.ui.view.UserView;
 
 /**
  * Created by Miroslaw Stanek on 23.04.15.
@@ -13,7 +13,5 @@ import frogermcs.io.githubclient.ui.activity.module.RepositoryDetailsActivityMod
         modules = RepositoryDetailsActivityModule.class
 )
 public interface RepositoryDetailsActivityComponent {
-
-    RepositoryDetailsActivity inject(RepositoryDetailsActivity repositoryDetailsActivity);
-
+    UserView inject(UserView userView);
 }
